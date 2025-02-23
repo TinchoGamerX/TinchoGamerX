@@ -1,5 +1,5 @@
 body {
-  background-image: url('https://last-day-gnt1auhy1-tinchogamerxs-projects.vercel.app/imagen.jpg');
+  background-image: url('/imagen.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
