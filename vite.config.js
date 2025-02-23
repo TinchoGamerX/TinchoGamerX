@@ -6,4 +6,5 @@ export default defineConfig({
   server: {
     port: 5173, // Asegura que el puerto sea el correcto
   },
+  publicDir: 'public', // Asegura que la carpeta public se incluya en la compilación
 });
