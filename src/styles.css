@@ -1,5 +1,5 @@
 body {
-  background-image: url('./imagen.jpg'); /* Ruta corregida */
+  background-image: url('./imagen.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
