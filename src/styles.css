@@ -1,5 +1,5 @@
 body {
-  background-image: url('/imagen.jpg'); /* Asegúrate de que la imagen esté en la carpeta correcta */
+  background-image: url('./imagen.jpg'); /* Ruta corregida */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -15,6 +15,7 @@ h1 {
   text-transform: uppercase;
   margin-bottom: 20px;
   letter-spacing: 2px; /* Espaciado entre letras */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra para mejor visibilidad */
 }
 
 input {
@@ -38,6 +39,7 @@ button {
   font-size: 1rem;
   font-weight: bold;
   margin-top: 10px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Mejora la visibilidad del texto */
 }
 
 button:hover {
@@ -45,7 +47,7 @@ button:hover {
 }
 
 .respuestas {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.85); /* Mayor contraste */
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
