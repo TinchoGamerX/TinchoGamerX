@@ -3,6 +3,14 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import './styles.css';
 
+// Definir iconos para cada categoría
+const iconosCategorias = {
+  "Objetos": "\u{1F9F0}", // 🧰
+  "Recursos": "\u{1F4E6}", // 📦
+  "Trucos": "\u{1F9EA}", // 🧪
+  "Guías": "\u{1F4DA}"  // 📚
+};
+
 function App() {
   const [recursos, setRecursos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
@@ -29,16 +37,15 @@ function App() {
       return;
     }
 
-    console.log("Texto de búsqueda:", busqueda);
-    console.log("Recursos disponibles para búsqueda:", recursos);
+    const textoBusqueda = busqueda.toLowerCase();
 
-    const filtrados = recursos.filter(recurso =>
-      recurso.Nombre?.toLowerCase().includes(busqueda.toLowerCase()) ||
-      (Array.isArray(recurso.PalabrasClave) && 
-        recurso.PalabrasClave.some(palabra => palabra.toLowerCase().includes(busqueda.toLowerCase())))
-    );
+    const filtrados = recursos.filter(recurso => {
+      const nombreRecurso = recurso.Nombre?.toLowerCase() || "";
+      return nombreRecurso.includes(textoBusqueda) || 
+             nombreRecurso.includes(textoBusqueda.replace(/s$/, "")) || 
+             nombreRecurso.includes(textoBusqueda + "s");
+    });
 
-    console.log("Resultados filtrados:", filtrados);
     setResultados(filtrados);
   };
 
@@ -72,6 +79,9 @@ function App() {
                 <div>
                   <p className="text-lg font-semibold">{recurso.Nombre}</p>
                   <p className="text-gray-400">{recurso.Descripcion}</p>
+                  {recurso.Categoria && (
+                    <p className="text-yellow-400 font-bold">{iconosCategorias[recurso.Categoria] || ""} {recurso.Categoria}</p>
+                  )}
                   {recurso.Video && (
                     <a
                       href={recurso.Video}
@@ -79,7 +89,7 @@ function App() {
                       rel="noopener noreferrer"
                       className="text-blue-400 underline"
                     >
-                      Ver Video
+                      Video relacionado para apoyar el canal
                     </a>
                   )}
                 </div>
@@ -90,6 +100,11 @@ function App() {
           <p className="text-gray-400">No se encontraron resultados.</p>
         )}
       </div>
+      
+      {/* Footer con la leyenda */}
+      <footer className="mt-6 text-gray-300 text-sm">
+        Desarrollado por <span className="font-bold">Tincho Gamer X</span>
+      </footer>
     </div>
   );
 }
