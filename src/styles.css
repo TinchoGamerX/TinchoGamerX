@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 body {
   background-image: url('/imagen.jpg');
   background-size: cover;
@@ -86,4 +88,15 @@ button:hover {
 
 .respuesta-item a:hover {
   text-decoration: underline;
+}
+
+/* Estilos para la leyenda */
+footer {
+  font-family: 'Bebas Neue', sans-serif;
+  color: white;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-top: 20px;
 }
