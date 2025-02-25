@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 body {
-  background-image: url('/imagen.jpg');
+  background-image: url('imagen.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
