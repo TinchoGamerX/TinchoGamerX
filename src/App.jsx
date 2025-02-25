@@ -119,9 +119,9 @@ function App() {
           <p className="text-gray-400">No se encontraron resultados.</p>
         )}
       </div>
-      <footer className="mt-6 text-white text-lg font-bold tracking-wide" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
-        DESARROLLADO POR TINCHO GAMER X
-      </footer>
+     <footer className="mt-6 text-lg tracking-wide" style={{ fontWeight: 300, color: "white" }}>
+  DESARROLLADO POR TINCHO GAMER X
+</footer>
     </div>
   );
 }
