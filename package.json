@@ -11,7 +11,8 @@
   "dependencies": {
     "firebase": "^10.7.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "swiper": "^11.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.8",

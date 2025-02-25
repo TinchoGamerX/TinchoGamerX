@@ -3,6 +3,13 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import './styles.css';
 
+// ✅ Importación del carrusel (Swiper)
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Pagination } from 'swiper/modules';
+
 const iconosCategorias = {
   "Objetos": "\u{1F9F0}",
   "Recursos": "\u{1F4E6}",
@@ -71,6 +78,7 @@ function App() {
           Buscar
         </button>
       </div>
+
       <div className="w-full max-w-md bg-gray-800 p-4 rounded-lg shadow-lg respuestas">
         <h2 className="text-xl font-semibold mb-2">Resultados:</h2>
         {resultados.length > 0 ? (
@@ -119,9 +127,55 @@ function App() {
           <p className="text-gray-400">No se encontraron resultados.</p>
         )}
       </div>
-     <footer className="mt-6 text-lg tracking-wide" style={{ fontWeight: 300, color: "white" }}>
-  DESARROLLADO POR TINCHO GAMER X
-</footer>
+
+      {/* ✅ Carrusel de videos populares */}
+      <div className="w-full max-w-md bg-gray-800 p-4 rounded-lg shadow-lg mt-6">
+        <h2 className="text-xl font-semibold mb-4 text-center">🔥 Videos Populares 🔥</h2>
+        <Swiper
+          modules={[Navigation, Pagination]}
+          spaceBetween={10}
+          slidesPerView={1}
+          navigation
+          pagination={{ clickable: true }}
+          className="rounded-lg"
+        >
+          <SwiperSlide>
+            <iframe
+              width="100%"
+              height="200"
+              src="https://www.youtube.com/embed/T0measLPqJo"
+              title="Video popular 1"
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
+          </SwiperSlide>
+          <SwiperSlide>
+            <iframe
+              width="100%"
+              height="200"
+              src="https://www.youtube.com/embed/HgJjP0O90GU"
+              title="Video popular 2"
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
+          </SwiperSlide>
+          <SwiperSlide>
+            <iframe
+              width="100%"
+              height="200"
+              src="https://www.youtube.com/embed/NAzJDQvyM18"
+              title="Video popular 3"
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
+          </SwiperSlide>
+        </Swiper>
+      </div>
+
+      {/* ✅ Footer actualizado */}
+      <footer className="mt-6 text-lg tracking-wide" style={{ fontWeight: 300, color: "white" }}>
+        DESARROLLADO POR TINCHO GAMER X
+      </footer>
     </div>
   );
 }
