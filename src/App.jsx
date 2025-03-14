@@ -3,7 +3,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import './styles.css';
 
-// ✅ Importación del carrusel (Swiper)
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -48,11 +47,18 @@ function App() {
   const obtenerEmbedURL = (url) => {
     try {
       const urlObj = new URL(url);
+      
       if (urlObj.hostname.includes("youtu.be")) {
         return `https://www.youtube.com/embed/${urlObj.pathname.substring(1)}`;
       }
-      if (urlObj.hostname.includes("youtube.com") && urlObj.searchParams.has("v")) {
-        return `https://www.youtube.com/embed/${urlObj.searchParams.get("v")}`;
+      
+      if (urlObj.hostname.includes("youtube.com")) {
+        if (urlObj.searchParams.has("v")) {
+          return `https://www.youtube.com/embed/${urlObj.searchParams.get("v")}`;
+        } 
+        if (urlObj.pathname.includes("/shorts/")) {
+          return `https://www.youtube.com/embed/${urlObj.pathname.split("/shorts/")[1]}`;
+        }
       }
     } catch (error) {
       console.error("URL de video inválida:", url);
@@ -127,55 +133,6 @@ function App() {
           <p className="text-gray-400">No se encontraron resultados.</p>
         )}
       </div>
-
-      {/* ✅ Carrusel de videos populares */}
-      <div className="w-full max-w-md bg-gray-800 p-4 rounded-lg shadow-lg mt-6">
-        <h2 className="text-xl font-semibold mb-4 text-center">🔥 Videos Populares 🔥</h2>
-        <Swiper
-          modules={[Navigation, Pagination]}
-          spaceBetween={10}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          className="rounded-lg"
-        >
-          <SwiperSlide>
-            <iframe
-              width="100%"
-              height="200"
-              src="https://www.youtube.com/embed/T0measLPqJo"
-              title="Video popular 1"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </SwiperSlide>
-          <SwiperSlide>
-            <iframe
-              width="100%"
-              height="200"
-              src="https://www.youtube.com/embed/HgJjP0O90GU"
-              title="Video popular 2"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </SwiperSlide>
-          <SwiperSlide>
-            <iframe
-              width="100%"
-              height="200"
-              src="https://www.youtube.com/embed/NAzJDQvyM18"
-              title="Video popular 3"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </SwiperSlide>
-        </Swiper>
-      </div>
-
-      {/* ✅ Footer actualizado */}
-      <footer className="mt-6 text-lg tracking-wide" style={{ fontWeight: 300, color: "white" }}>
-        DESARROLLADO POR TINCHO GAMER X
-      </footer>
     </div>
   );
 }
