@@ -3,12 +3,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import './styles.css';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { Navigation, Pagination } from 'swiper/modules';
-
 const iconosCategorias = {
   "Objetos": "\u{1F9F0}",
   "Recursos": "\u{1F4E6}",
@@ -101,7 +95,6 @@ function App() {
         {resultados.length > 0 ? (
           <ul>
             {resultados.map(recurso => {
-              const videoURL = obtenerEmbedURL(recurso.Video);
               return (
                 <li key={recurso.id} className="border-b border-gray-700 py-4 flex flex-col items-center space-y-4 respuesta-item">
                   {recurso.Imagen && (
@@ -119,7 +112,8 @@ function App() {
           <p className="text-gray-400">No se encontraron resultados.</p>
         )}
       </div>
+    </div>
+  );
+}
 
-      {/* 🔹 SWIPER - Carrusel de Videos 🔹 */}
-      <div className="mt-8 w-full max-w-2xl">
-        <h2 className="text-2xl font-semib
+export default App;
