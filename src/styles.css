@@ -1,23 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
+:root {
+  --background-image: url('/assets/FERIA.jpg'); /* Imagen por defecto */
+}
+
 body {
-  background-image: url('imagen.jpg');
+  background-image: var(--background-image);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  color: #222; /* Texto oscuro para mejor legibilidad */
-  font-family: 'Poppins', sans-serif; /* Letra más ancha y moderna */
+  color: #222;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
 }
 
 h1 {
-  color: white; /* Color blanco */
-  font-weight: 700; /* Estilo de letra grueso y elegante */
+  color: white;
+  font-weight: 700;
   font-size: 2.5rem;
   text-transform: uppercase;
   margin-bottom: 20px;
-  letter-spacing: 2px; /* Espaciado entre letras */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra para mejor visibilidad */
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 input {
@@ -41,7 +45,7 @@ button {
   font-size: 1rem;
   font-weight: bold;
   margin-top: 10px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Mejora la visibilidad del texto */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
@@ -49,7 +53,7 @@ button:hover {
 }
 
 .respuestas {
-  background-color: rgba(255, 255, 255, 0.85); /* Mayor contraste */
+  background-color: rgba(255, 255, 255, 0.85);
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
@@ -64,6 +68,8 @@ button:hover {
   padding: 15px;
   border-bottom: 2px solid #ccc;
   font-size: 1.1rem;
+  padding-left: 5px; /* Ajusta este valor para mover el texto gradualmente a la izquierda */
+  margin-left: -30px; /* Puedes cambiarlo a valores negativos si es necesario */
 }
 
 .respuesta-item img {
@@ -90,7 +96,17 @@ button:hover {
   text-decoration: underline;
 }
 
-/* Estilos para la leyenda */
+.video-container {
+  width: 100%; /* Asegura que el video ocupe todo el ancho del contenedor */
+  display: flex;
+  justify-content: center; /* Centra el video horizontalmente */
+}
+
+.video-container iframe {
+  width: 100%; /* Ajusta el ancho del video al contenedor */
+  max-width: 100%; /* Evita que se pase del contenedor */
+}
+
 footer {
   font-family: 'Bebas Neue', sans-serif;
   color: white;
