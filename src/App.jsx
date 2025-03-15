@@ -17,59 +17,60 @@ const iconosCategorias = {
 };
 
 function App() {
+  console.log("🚀 App.js se está ejecutando"); // <-- MENSAJE DE PRUEBA
+  
   const [recursos, setRecursos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const [resultados, setResultados] = useState([]);
 
   useEffect(() => {
+    console.log("📥 Cargando recursos desde Firebase...");
     const obtenerRecursos = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "Recursos"));
         const datos = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        console.log("✅ Recursos obtenidos:", datos);
         setRecursos(datos);
-        console.log("Datos obtenidos de Firebase:", datos);
       } catch (error) {
-        console.error("Error obteniendo los datos:", error);
+        console.error("❌ Error obteniendo los datos:", error);
       }
     };
     obtenerRecursos();
   }, []);
 
   const manejarBusqueda = () => {
+    console.log("🔍 Buscando:", busqueda);
     if (!busqueda.trim()) {
       setResultados([]);
       return;
     }
     const textoBusqueda = busqueda.toLowerCase();
     const filtrados = recursos.filter(recurso => recurso.Nombre?.toLowerCase().includes(textoBusqueda));
+    console.log("🔎 Resultados encontrados:", filtrados);
     setResultados(filtrados);
   };
 
   const obtenerEmbedURL = (url) => {
     try {
-      console.log("URL recibida:", url);
+      console.log("🎥 Procesando URL de video:", url);
       const urlObj = new URL(url);
 
       if (urlObj.hostname.includes("youtu.be")) {
-        const videoId = urlObj.pathname.substring(1);
-        console.log("Video ID extraído:", videoId);
-        return `https://www.youtube.com/embed/${videoId}`;
+        return `https://www.youtube.com/embed/${urlObj.pathname.substring(1)}`;
       }
 
       if (urlObj.hostname.includes("youtube.com")) {
         if (urlObj.searchParams.has("v")) {
-          const videoId = urlObj.searchParams.get("v");
-          console.log("Video ID extraído:", videoId);
-          return `https://www.youtube.com/embed/${videoId}`;
+          return `https://www.youtube.com/embed/${urlObj.searchParams.get("v")}`;
         }
         if (urlObj.pathname.includes("/shorts/")) {
           const videoId = urlObj.pathname.split("/shorts/")[1];
-          console.log("Shorts ID extraído:", videoId);
+          console.log("🔗 URL Convertida:", `https://www.youtube.com/embed/${videoId}`);
           return `https://www.youtube.com/embed/${videoId}`;
         }
       }
     } catch (error) {
-      console.error("URL de video inválida:", url);
+      console.error("❌ URL de video inválida:", url);
     }
     return null;
   };
@@ -99,8 +100,6 @@ function App() {
           <ul>
             {resultados.map(recurso => {
               const videoURL = obtenerEmbedURL(recurso.Video);
-              console.log(`Video URL generado para ${recurso.Nombre}:`, videoURL);
-
               return (
                 <li key={recurso.id} className="border-b border-gray-700 py-4 flex flex-col items-center space-y-4 respuesta-item">
                   {recurso.Imagen && (
