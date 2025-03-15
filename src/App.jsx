@@ -27,6 +27,7 @@ function App() {
         const querySnapshot = await getDocs(collection(db, "Recursos"));
         const datos = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setRecursos(datos);
+        console.log("Datos obtenidos de Firebase:", datos);
       } catch (error) {
         console.error("Error obteniendo los datos:", error);
       }
@@ -46,21 +47,24 @@ function App() {
 
   const obtenerEmbedURL = (url) => {
     try {
-      console.log("URL Original:", url); // ✅ Verificar URL recibida
-
+      console.log("URL recibida:", url);
       const urlObj = new URL(url);
-      
+
       if (urlObj.hostname.includes("youtu.be")) {
-        return `https://www.youtube.com/embed/${urlObj.pathname.substring(1)}`;
+        const videoId = urlObj.pathname.substring(1);
+        console.log("Video ID extraído:", videoId);
+        return `https://www.youtube.com/embed/${videoId}`;
       }
-      
+
       if (urlObj.hostname.includes("youtube.com")) {
         if (urlObj.searchParams.has("v")) {
-          return `https://www.youtube.com/embed/${urlObj.searchParams.get("v")}`;
-        } 
+          const videoId = urlObj.searchParams.get("v");
+          console.log("Video ID extraído:", videoId);
+          return `https://www.youtube.com/embed/${videoId}`;
+        }
         if (urlObj.pathname.includes("/shorts/")) {
           const videoId = urlObj.pathname.split("/shorts/")[1];
-          console.log("URL Convertida:", `https://www.youtube.com/embed/${videoId}`); // ✅ Verificar conversión
+          console.log("Shorts ID extraído:", videoId);
           return `https://www.youtube.com/embed/${videoId}`;
         }
       }
@@ -94,10 +98,9 @@ function App() {
         {resultados.length > 0 ? (
           <ul>
             {resultados.map(recurso => {
-              console.log("Recurso procesado:", recurso); // ✅ Verificar si recurso.Video existe
-              console.log("Valor de recurso.Video:", recurso.Video); // ✅ Verificar URL antes de conversión
-
               const videoURL = obtenerEmbedURL(recurso.Video);
+              console.log(`Video URL generado para ${recurso.Nombre}:`, videoURL);
+
               return (
                 <li key={recurso.id} className="border-b border-gray-700 py-4 flex flex-col items-center space-y-4 respuesta-item">
                   {recurso.Imagen && (
