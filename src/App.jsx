@@ -78,6 +78,7 @@ function App() {
   return (
     <div className="min-h-screen bg-red-500 text-white flex flex-col items-center p-6">
       <h1 className="text-3xl font-bold text-blue-400 mb-4">Buscador de Recursos y Trucos</h1>
+
       <div className="flex space-x-2 mb-6">
         <input
           type="text"
@@ -96,6 +97,7 @@ function App() {
 
       <div className="w-full max-w-md bg-gray-800 p-4 rounded-lg shadow-lg respuestas">
         <h2 className="text-xl font-semibold mb-2">Resultados:</h2>
+
         {resultados.length > 0 ? (
           <ul>
             {resultados.map(recurso => {
@@ -108,31 +110,6 @@ function App() {
                   <div className="text-center">
                     <p className="text-lg font-semibold">{recurso.Nombre}</p>
                     <p className="text-gray-400">{recurso.Descripcion}</p>
-                    {recurso.Categoria && (
-                      <p className="text-yellow-400 font-bold">{iconosCategorias[recurso.Categoria] || ""} {recurso.Categoria}</p>
-                    )}
-                    {videoURL && (
-                      <div className="flex flex-col items-center mt-4 w-full">
-                        <iframe
-                          width="100%"
-                          height="315"
-                          src={videoURL}
-                          title="Video relacionado"
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          className="rounded-lg shadow-lg"
-                        ></iframe>
-                        <a
-                          href={recurso.Video}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-3 bg-blue-500 text-white px-5 py-3 rounded-lg font-bold text-center text-lg hover:bg-blue-700 transition"
-                        >
-                          🔥 Mira el video en YouTube y Suscríbete 🔥
-                        </a>
-                      </div>
-                    )}
                   </div>
                 </li>
               );
@@ -145,40 +122,4 @@ function App() {
 
       {/* 🔹 SWIPER - Carrusel de Videos 🔹 */}
       <div className="mt-8 w-full max-w-2xl">
-        <h2 className="text-2xl font-semibold text-center mb-4">Videos Recomendados</h2>
-        <Swiper
-          modules={[Navigation, Pagination]}
-          navigation
-          pagination={{ clickable: true }}
-          spaceBetween={20}
-          slidesPerView={1}
-          className="w-full"
-        >
-          {recursos.map(recurso => {
-            const videoURL = obtenerEmbedURL(recurso.Video);
-            return (
-              videoURL && (
-                <SwiperSlide key={recurso.id}>
-                  <div className="flex flex-col items-center">
-                    <iframe
-                      width="100%"
-                      height="315"
-                      src={videoURL}
-                      title="Video recomendado"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="rounded-lg shadow-lg"
-                    ></iframe>
-                  </div>
-                </SwiperSlide>
-              )
-            );
-          })}
-        </Swiper>
-      </div>
-    </div>
-  );
-}
-
-export default App;
+        <h2 className="text-2xl font-semib
