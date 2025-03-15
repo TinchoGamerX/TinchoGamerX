@@ -95,6 +95,7 @@ function App() {
         {resultados.length > 0 ? (
           <ul>
             {resultados.map(recurso => {
+              const videoURL = obtenerEmbedURL(recurso.Video);
               return (
                 <li key={recurso.id} className="border-b border-gray-700 py-4 flex flex-col items-center space-y-4 respuesta-item">
                   {recurso.Imagen && (
@@ -104,6 +105,18 @@ function App() {
                     <p className="text-lg font-semibold">{recurso.Nombre}</p>
                     <p className="text-gray-400">{recurso.Descripcion}</p>
                   </div>
+                  {videoURL && (
+                    <iframe
+                      width="100%"
+                      height="200"
+                      src={videoURL}
+                      title="Video relacionado"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="rounded-lg shadow-lg"
+                    ></iframe>
+                  )}
                 </li>
               );
             })}
