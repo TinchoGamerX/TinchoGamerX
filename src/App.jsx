@@ -46,6 +46,8 @@ function App() {
 
   const obtenerEmbedURL = (url) => {
     try {
+      console.log("URL Original:", url); // ✅ Verificar URL recibida
+
       const urlObj = new URL(url);
       
       if (urlObj.hostname.includes("youtu.be")) {
@@ -57,7 +59,9 @@ function App() {
           return `https://www.youtube.com/embed/${urlObj.searchParams.get("v")}`;
         } 
         if (urlObj.pathname.includes("/shorts/")) {
-          return `https://www.youtube.com/embed/${urlObj.pathname.split("/shorts/")[1]}`;
+          const videoId = urlObj.pathname.split("/shorts/")[1];
+          console.log("URL Convertida:", `https://www.youtube.com/embed/${videoId}`); // ✅ Verificar conversión
+          return `https://www.youtube.com/embed/${videoId}`;
         }
       }
     } catch (error) {
@@ -90,6 +94,9 @@ function App() {
         {resultados.length > 0 ? (
           <ul>
             {resultados.map(recurso => {
+              console.log("Recurso procesado:", recurso); // ✅ Verificar si recurso.Video existe
+              console.log("Valor de recurso.Video:", recurso.Video); // ✅ Verificar URL antes de conversión
+
               const videoURL = obtenerEmbedURL(recurso.Video);
               return (
                 <li key={recurso.id} className="border-b border-gray-700 py-4 flex flex-col items-center space-y-4 respuesta-item">
