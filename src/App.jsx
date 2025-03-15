@@ -17,8 +17,8 @@ const iconosCategorias = {
 };
 
 function App() {
-  console.log("🚀 App.js se está ejecutando"); // <-- MENSAJE DE PRUEBA
-  
+  console.log("🚀 App.js se está ejecutando");
+
   const [recursos, setRecursos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const [resultados, setResultados] = useState([]);
@@ -141,6 +141,41 @@ function App() {
         ) : (
           <p className="text-gray-400">No se encontraron resultados.</p>
         )}
+      </div>
+
+      {/* 🔹 SWIPER - Carrusel de Videos 🔹 */}
+      <div className="mt-8 w-full max-w-2xl">
+        <h2 className="text-2xl font-semibold text-center mb-4">Videos Recomendados</h2>
+        <Swiper
+          modules={[Navigation, Pagination]}
+          navigation
+          pagination={{ clickable: true }}
+          spaceBetween={20}
+          slidesPerView={1}
+          className="w-full"
+        >
+          {recursos.map(recurso => {
+            const videoURL = obtenerEmbedURL(recurso.Video);
+            return (
+              videoURL && (
+                <SwiperSlide key={recurso.id}>
+                  <div className="flex flex-col items-center">
+                    <iframe
+                      width="100%"
+                      height="315"
+                      src={videoURL}
+                      title="Video recomendado"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="rounded-lg shadow-lg"
+                    ></iframe>
+                  </div>
+                </SwiperSlide>
+              )
+            );
+          })}
+        </Swiper>
       </div>
     </div>
   );
