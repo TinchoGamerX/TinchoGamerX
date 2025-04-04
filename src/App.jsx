@@ -10,6 +10,12 @@ const iconosCategorias = {
   "Guías": "\u{1F4DA}"
 };
 
+const imagenesFondo = [
+  "FERIA.jpg", "FONDO 5.png", "GIRL LDOE.jpg", "GUERRERO LDOE.jpg",
+  "HOJA DE RUTA 2025.png", "HOJA DE RUTA.jpg", "OBS 2.jpg", "OBS 3.jpg",
+  "OBS 4.jpg", "OBS 5.png", "OBS 6.jpg", "OBS 8.jpg", "OBS 9.jpg", "WALLPAPER LDOE 2.png"
+];
+
 function App() {
   console.log("🚀 App.js se está ejecutando");
 
@@ -32,6 +38,11 @@ function App() {
     obtenerRecursos();
   }, []);
 
+  useEffect(() => {
+    const imagenAleatoria = imagenesFondo[Math.floor(Math.random() * imagenesFondo.length)];
+    document.documentElement.style.setProperty('--background-image', `url('/assets/${imagenAleatoria}')`);
+  }, []);
+
   const manejarBusqueda = () => {
     console.log("🔍 Buscando:", busqueda);
     if (!busqueda.trim()) {
@@ -44,85 +55,52 @@ function App() {
     setResultados(filtrados);
   };
 
-  const obtenerEmbedURL = (url) => {
-    try {
-      console.log("🎥 Procesando URL de video:", url);
-      const urlObj = new URL(url);
-
-      if (urlObj.hostname.includes("youtu.be")) {
-        return `https://www.youtube.com/embed/${urlObj.pathname.substring(1)}`;
-      }
-
-      if (urlObj.hostname.includes("youtube.com")) {
-        if (urlObj.searchParams.has("v")) {
-          return `https://www.youtube.com/embed/${urlObj.searchParams.get("v")}`;
-        }
-        if (urlObj.pathname.includes("/shorts/")) {
-          const videoId = urlObj.pathname.split("/shorts/")[1];
-          console.log("🔗 URL Convertida:", `https://www.youtube.com/embed/${videoId}`);
-          return `https://www.youtube.com/embed/${videoId}`;
-        }
-      }
-    } catch (error) {
-      console.error("❌ URL de video inválida:", url);
-    }
-    return null;
-  };
-
   return (
-    <div className="min-h-screen bg-red-500 text-white flex flex-col items-center p-6">
-      <h1 className="text-3xl font-bold text-blue-400 mb-4">Buscador de Recursos y Trucos</h1>
+    <div className="contenedor-principal">
+      <h1 className="titulo">Buscador de Recursos y Trucos</h1>
 
-      <div className="flex space-x-2 mb-6">
+      <div className="busqueda">
         <input
           type="text"
           placeholder="Buscar recurso o truco..."
-          className="px-4 py-2 rounded-lg text-black"
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
         />
-        <button
-          className="bg-blue-500 px-4 py-2 rounded-lg text-white hover:bg-blue-700 transition"
-          onClick={manejarBusqueda}
-        >
-          Buscar
-        </button>
+        <button onClick={manejarBusqueda}>Buscar</button>
       </div>
 
-      <div className="w-full max-w-md bg-gray-800 p-4 rounded-lg shadow-lg respuestas">
-        <h2 className="text-xl font-semibold mb-2">Resultados:</h2>
+      <div className="respuestas">
+        <h2>Resultados:</h2>
 
         {resultados.length > 0 ? (
           <ul>
-            {resultados.map(recurso => {
-              const videoURL = obtenerEmbedURL(recurso.Video);
-              return (
-                <li key={recurso.id} className="border-b border-gray-700 py-4 flex flex-col items-center space-y-4 respuesta-item">
-                  {recurso.Imagen && (
-                    <img src={recurso.Imagen} alt={recurso.Nombre} className="w-16 h-16 object-cover rounded-lg" />
+            {resultados.map(recurso => (
+              <li key={recurso.id} className="respuesta-item">
+                {recurso.Imagen && (
+                  <img src={recurso.Imagen} alt={recurso.Nombre} className="imagen-recurso" />
+                )}
+                <div className="texto-recurso">
+                  <p className="nombre-recurso">{recurso.Nombre}</p>
+                  <p className="descripcion-recurso">{recurso.Descripcion}</p>
+
+                  {/* Verifica y convierte la URL a formato "embed" si es necesario */}
+                  {recurso.Video && (
+                    <div className="video-container">
+                      <iframe
+                        src={recurso.Video.includes('youtu.be') ? recurso.Video.replace('youtu.be', 'youtube.com/embed') : recurso.Video}
+                        title={`Video de ${recurso.Nombre}`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
                   )}
-                  <div className="text-center">
-                    <p className="text-lg font-semibold">{recurso.Nombre}</p>
-                    <p className="text-gray-400">{recurso.Descripcion}</p>
-                  </div>
-                  {videoURL && (
-                    <iframe
-                      width="100%"
-                      height="200"
-                      src={videoURL}
-                      title="Video relacionado"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="rounded-lg shadow-lg"
-                    ></iframe>
-                  )}
-                </li>
-              );
-            })}
+                </div>
+              </li>
+            ))}
           </ul>
         ) : (
-          <p className="text-gray-400">No se encontraron resultados.</p>
+          <p>No se encontraron resultados.</p>
         )}
       </div>
     </div>
