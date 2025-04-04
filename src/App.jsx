@@ -40,6 +40,7 @@ function App() {
 
   useEffect(() => {
     const imagenAleatoria = imagenesFondo[Math.floor(Math.random() * imagenesFondo.length)];
+    // Cambia la ruta de la imagen aquí para usar la correcta
     document.documentElement.style.setProperty('--background-image', `url('/assets/${imagenAleatoria}')`);
   }, []);
 
@@ -77,7 +78,7 @@ function App() {
             {resultados.map(recurso => (
               <li key={recurso.id} className="respuesta-item">
                 {recurso.Imagen && (
-                  <img src={recurso.Imagen} alt={recurso.Nombre} className="imagen-recurso" />
+                  <img src={`/assets/${recurso.Imagen}`} alt={recurso.Nombre} className="imagen-recurso" />
                 )}
                 <div className="texto-recurso">
                   <p className="nombre-recurso">{recurso.Nombre}</p>
