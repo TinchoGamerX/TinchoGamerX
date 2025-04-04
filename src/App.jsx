@@ -88,7 +88,14 @@ function App() {
                   {recurso.Video && (
                     <div className="video-container">
                       <iframe
-                        src={recurso.Video.includes('youtu.be') ? recurso.Video.replace('youtu.be', 'youtube.com/embed') : recurso.Video}
+                        // Modificación para los Shorts
+                        src={
+                          recurso.Video.includes('youtu.be')
+                            ? recurso.Video.replace('youtu.be', 'youtube.com/embed')
+                            : recurso.Video.includes('youtube.com/shorts')
+                            ? recurso.Video.replace('youtube.com/shorts', 'youtube.com/embed')
+                            : recurso.Video
+                        }
                         title={`Video de ${recurso.Nombre}`}
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
