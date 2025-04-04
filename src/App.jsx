@@ -40,7 +40,7 @@ function App() {
 
   useEffect(() => {
     const imagenAleatoria = imagenesFondo[Math.floor(Math.random() * imagenesFondo.length)];
-    // Cambiar la ruta de la imagen aquí para usar la correcta
+    // Cambiar la ruta de la imagen aquí para usar la correcta desde la carpeta public
     document.documentElement.style.setProperty('--background-image', `url('/${imagenAleatoria}')`);
   }, []);
 
